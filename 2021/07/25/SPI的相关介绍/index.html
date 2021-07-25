@@ -20,30 +20,53 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="整理学习笔记">
-<meta property="og:type" content="website">
-<meta property="og:title" content="cym 的博客">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="[TOC] SPI思想以及在各种框架中的使用​        SPI全称是Service Provider Interface， 是JDK内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的系统指的是服务的调用者。很多框架都使用了SPI的机制，接下来我们将分析几个知名框架的源码种包含的SP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SPI的相关介绍">
+<meta property="og:url" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="cym 的博客">
-<meta property="og:description" content="整理学习笔记">
+<meta property="og:description" content="[TOC] SPI思想以及在各种框架中的使用​        SPI全称是Service Provider Interface， 是JDK内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的系统指的是服务的调用者。很多框架都使用了SPI的机制，接下来我们将分析几个知名框架的源码种包含的SP">
 <meta property="og:locale">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725150001836.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725152041527.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725153327980.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725161023861.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725180146261.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725180309057.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725180605194.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725181141429.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725183319313.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725195255119.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725195402939.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725195620272.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231019401.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231219902.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231304662.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231700641.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231721922.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231443042.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231536115.png">
+<meta property="article:published_time" content="2021-07-25T06:28:19.000Z">
+<meta property="article:modified_time" content="2021-07-25T15:18:08.328Z">
 <meta property="article:author" content="cym">
+<meta property="article:tag" content="SPI">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725150001836.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-Hans'
   };
 </script>
 
-  <title>cym 的博客</title>
+  <title>SPI的相关介绍 | cym 的博客</title>
   
 
 
@@ -142,80 +165,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">日志框架介绍</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-25 19:13:19" itemprop="dateCreated datePublished" datetime="2021-07-25T19:13:19+08:00">2021-07-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-26 00:08:21" itemprop="dateModified" datetime="2021-07-26T00:08:21+08:00">2021-07-26</time>
-              </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>slf4j有且仅有一个日志实现框架的绑定，如果出现了多个，默认使用第一个框架</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">META-INF&#x2F;services&#x2F;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
@@ -231,10 +184,9 @@
       <meta itemprop="name" content="cym 的博客">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">SPI的相关介绍</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          SPI的相关介绍
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -258,7 +210,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>[TOC]</p>
+        <p>[TOC]</p>
 <h3 id="SPI思想以及在各种框架中的使用"><a href="#SPI思想以及在各种框架中的使用" class="headerlink" title="SPI思想以及在各种框架中的使用"></a><code>SPI</code>思想以及在各种框架中的使用</h3><p>​        <code>SPI</code>全称是<code>Service Provider Interface</code>， 是<code>JDK</code>内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的<strong>系统</strong>指的是服务的调用者。很多框架都使用了<code>SPI</code>的机制，接下来我们将分析几个知名框架的源码种包含的<code>SPI</code>机制，同时在最后自己实现一个模拟<code>SPI</code>功能的代码。</p>
 <h4 id="一、JDBC中的SPI"><a href="#一、JDBC中的SPI" class="headerlink" title="一、JDBC中的SPI"></a>一、<code>JDBC</code>中的<code>SPI</code></h4><h5 id="场景介绍："><a href="#场景介绍：" class="headerlink" title="场景介绍："></a>场景介绍：</h5><p>​        在使用数据库的时候，我们首先要导入mysql或者oracle等数据库厂商提供的驱动包。导入jar包之后可以发现它们都存在一个相同的目录结构。</p>
 <p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725150001836.png" alt="image-20210725150001836"></p>
@@ -379,601 +331,37 @@
 </li>
 </ol>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/SPI/" rel="tag"># SPI</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/22/Redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/22/Redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-22 09:51:48 / 修改时间：21:25:57" itemprop="dateCreated datePublished" datetime="2021-04-22T09:51:48+08:00">2021-04-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Redis的持久化方式"><a href="#Redis的持久化方式" class="headerlink" title="Redis的持久化方式"></a>Redis的持久化方式</h3><p>Redis提供的持久化方式：</p>
-<p>RDB：对某一时间间隔的数据库保存快照</p>
-<p>AOF:服务器每次收到写操作之后记录的日志，它可以在服务器启动的时候进行重放，重建原始数据建库。当数据库比较大的时候，Redis会重写日志。</p>
-<p>没有持久化：服务器不关机，则数据一直存在。</p>
-<p>RDB+AOF：在这种情况下，AOF文件可以将用来保证数据库的完整性。</p>
-<p>各自的优点和缺点：</p>
-<p>RDB是对某个时间点的单文件备份：它可以按照不同的版本记录日志，比如每隔两个小时记录一次，每隔一天记录一次。在发生灾难的时候可以还原不同版本的备份。</p>
-<p>RDB适合用于灾后恢复：RDB是compact的文件，所以，可以传输到远程的服务器进行存储。</p>
-<p>尝试一下每秒备份一次是什么一次，是不是相当于重写</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/22/Redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" rel="next" title="日志框架介绍">
+      日志框架介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/21/Redis%E7%9A%84%E5%88%86%E5%8C%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/21/Redis%E7%9A%84%E5%88%86%E5%8C%BA/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-21 21:38:06 / 修改时间：21:44:49" itemprop="dateCreated datePublished" datetime="2021-04-21T21:38:06+08:00">2021-04-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Redis的分区"><a href="#Redis的分区" class="headerlink" title="Redis的分区"></a>Redis的分区</h3><p>partition(分区)：将数据分到多个redis服务器中。</p>
-<p>优点：</p>
-<ul>
-<li>增加了数据的存储容量，多台机器的存储用户数据量要大于单台机器。</li>
-<li>提高了计算机的性能。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/21/Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E8%B7%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/21/Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E8%B7%B5/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-21 20:33:51" itemprop="dateCreated datePublished" datetime="2021-04-21T20:33:51+08:00">2021-04-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Redis发布订阅模式实践"><a href="#Redis发布订阅模式实践" class="headerlink" title="Redis发布订阅模式实践"></a>Redis发布订阅模式实践</h3><p>准备三个连接同一个Redis服务器的客户端</p>
-<p>其中一个作为消息发布方；</p>
-<p>另外两个是消息接收方：</p>
-<p>这一部分内容太简单，略….</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-04-21 20:16:29" itemprop="dateCreated datePublished" datetime="2021-04-21T20:16:29+08:00">2021-04-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Redis安装卸载以及设置自启动"><a href="#Redis安装卸载以及设置自启动" class="headerlink" title="Redis安装卸载以及设置自启动"></a>Redis安装卸载以及设置自启动</h3><ol>
-<li>到官网下载redis的稳定版本</li>
-</ol>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421182511857.png" alt="image-20210421182511857"></p>
-<ol start="2">
-<li>安装gcc编译环境</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="3">
-<li>解压</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-6.2.2.tar.gz</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>进入到对应的文件中</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd redis-6.2.2</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>编译</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>运行</li>
-</ol>
-<p>进入src目录下，输入<code>./redis-server</code>，出现下面的内容，说明启动成功了</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421184434847.png" alt="image-20210421184434847"></p>
-<p>在另一台虚拟机上连接测试：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421184735450.png" alt="image-20210421184735450"></p>
-<p>以上的这种方式的不便之处：</p>
-<ul>
-<li>需要进入src的目录下执行redis-server和redis-cli</li>
-<li>不能开启自启动</li>
-</ul>
-<p>配置redis可执行文件的位置：</p>
-<p><code>cp redis-cli redis-server redis-sentinel /usr/local/bin</code></p>
-<p>之后可以在任何位置执行```redis-server`启动redis服务器。</p>
-<p>配置redis.conf文件</p>
-<ul>
-<li>设置redis-server后台模式运行</li>
-</ul>
-<p>daemonize yes</p>
-<ul>
-<li>设置dir，也就是存放RDB文件的位置为/usr/local/redis/路径下</li>
-<li>配置密码：当redis暴露在公网的时候可以保证安全性</li>
-</ul>
-<p>配置redis.conf自启动</p>
-<p>cp redis_init_script /etc/init.d/</p>
-<p>进入路径中，修改这个文件，按照自己的文件地址修改其中的内容</p>
-<p>vim redis_init_script</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421191327650.png" alt="image-20210421191327650"></p>
-<p>配置redis开机自启动</p>
-<p>在redis_init_script的文件中添加下面两行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig: 22345 10 90  </span><br><span class="line"># description: Start and Stop redis </span><br></pre></td></tr></table></figure>
-
-<p>设置开机自启动：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig redis_init_script on</span><br></pre></td></tr></table></figure>
-
-<p>然后reboot计算机，之后使用</p>
-<figure class="highlight ps"><figcaption><span>-ef | grep redis```观察redis-server是不是已经启动了</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">还可以使用下面的命令去启动或者关闭服务：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>打开redis命令:service 文件名称 start<br>关闭redis命令:service 文件名称 stop<br>设为开机启动:chkconfig 文件名称 on<br>设为开机关闭:chkconfig 文件名称 off</p>
-<pre><code>
-
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/12/Redis%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/12/Redis%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-12 15:13:50 / 修改时间：17:28:10" itemprop="dateCreated datePublished" datetime="2021-04-12T15:13:50+08:00">2021-04-12</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h3><p>下载</p>
-<p>tar -zxvf redis.tar.gz</p>
-<p>cd redis</p>
-<p>make &amp;&amp; make install</p>
-<p>在linux中进行差找</p>
-<p>/searchContent   然后n查找下一个， N查找上一个。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/11/%E7%BD%91%E5%8D%A1%E5%92%8C%E8%99%9A%E6%8B%9Fip%EF%BC%8C%20%E6%B5%AE%E5%8A%A8ip%E7%AD%89%E5%A4%9A%E7%A7%8Dip%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/04/11/%E7%BD%91%E5%8D%A1%E5%92%8C%E8%99%9A%E6%8B%9Fip%EF%BC%8C%20%E6%B5%AE%E5%8A%A8ip%E7%AD%89%E5%A4%9A%E7%A7%8Dip%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-04-11 14:19:09 / 修改时间：16:30:51" itemprop="dateCreated datePublished" datetime="2021-04-11T14:19:09+08:00">2021-04-11</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别"><a href="#弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别" class="headerlink" title="弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别"></a>弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别</h4><p>弹性公网IP是可以直接访问Internet的IP地址。一个弹性公网IP只能给一个ECS使用</p>
-<p>私有IP是公有云内网所使用的IP地址，用于内网通信，私有IP不能访问Internet。</p>
-<p>浮动IP与弹性公网IP功能类似，都是公网IP，用于连接公网，主要不同点在于浮动IP接口无法配置带宽参数。详情请参见“<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/api-eip/eip_openstackapi_0006.html">浮动IP</a>”。</p>
-<p>虚拟IP（即VIP）是一个未分配给真实弹性云服务器网卡的IP地址。主要用在弹性云服务器的主备切换，达到高可用性HA（High Availability）的目的。当主服务器发生故障无法对外提供服务时，动态将虚拟IP切换到备服务器，继续对外提供服务。详情请参见“<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/usermanual-vpc/vpc_vip_0001.html">虚拟IP简介</a>”。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/13/%E8%B4%AD%E7%89%A9%E8%BD%A6%E7%9A%84%E5%AD%98%E5%82%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/13/%E8%B4%AD%E7%89%A9%E8%BD%A6%E7%9A%84%E5%AD%98%E5%82%A8/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-03-13 10:34:11 / 修改时间：12:23:08" itemprop="dateCreated datePublished" datetime="2021-03-13T10:34:11+08:00">2021-03-13</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="购物车的存储"><a href="#购物车的存储" class="headerlink" title="购物车的存储"></a>购物车的存储</h3><p>1.使用cookie</p>
-<p>优点：不需要登录，不需要查询数据库，数据直接保存在浏览器端</p>
-<p>性能好，访问速度比较快，没有和数据库的交互</p>
-<p>但是数据会有丢失</p>
-<p>隐私安全</p>
-<ol start="2">
-<li>session只能适用于登录的情况嘛，不登录就没有session?</li>
-<li>购物车数据需要频繁读写</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/05/vue.js%E7%9A%84%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="cym">
-      <meta itemprop="description" content="整理学习笔记">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cym 的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/05/vue.js%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-05 20:55:22" itemprop="dateCreated datePublished" datetime="2021-03-05T20:55:22+08:00">2021-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-06 22:04:15" itemprop="dateModified" datetime="2021-03-06T22:04:15+08:00">2021-03-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><code>vue.js</code>的学习</p>
-<p>最近在尝试从头到尾搭建一个电商项目，因此便学习一下<code>vue.js</code>，自己虽然是后端开发人员，但是前端的内容或多或少也是需要了解一些。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 
@@ -1025,6 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SPI%E6%80%9D%E6%83%B3%E4%BB%A5%E5%8F%8A%E5%9C%A8%E5%90%84%E7%A7%8D%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">SPI思想以及在各种框架中的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81JDBC%E4%B8%AD%E7%9A%84SPI"><span class="nav-number">1.1.</span> <span class="nav-text">一、JDBC中的SPI</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF%E4%BB%8B%E7%BB%8D%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">场景介绍：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%80%9D%E8%80%83%EF%BC%9A"><span class="nav-number">1.1.2.</span> <span class="nav-text">问题思考：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2%E3%80%81%E8%8E%B7%E5%BE%97%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">2、获得迭代器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD%E5%93%AA%E4%B8%AA"><span class="nav-number">1.1.4.</span> <span class="nav-text">多个驱动加载哪个</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81springboot%E4%B8%AD%E7%9A%84SPI"><span class="nav-number">1.2.</span> <span class="nav-text">2、springboot中的SPI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81slf4j%E4%B8%AD%E7%9A%84SPI"><span class="nav-number">1.3.</span> <span class="nav-text">3、slf4j中的SPI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AASPI%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">手写一个SPI的应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E6%9F%A5%E8%AF%A2%E7%82%B9%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">思考查询点：</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
