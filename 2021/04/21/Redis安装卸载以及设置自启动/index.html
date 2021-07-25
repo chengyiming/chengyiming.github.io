@@ -20,19 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 欢迎访问我">
+  <meta name="description" content="Redis安装卸载以及设置自启动 到官网下载redis的稳定版本    安装gcc编译环境  1yum install gcc-c++     解压  1tar -zxvf redis-6.2.2.tar.gz   进入到对应的文件中  1cd redis-6.2.2   编译  1make   运行  进入src目录下，输入.&#x2F;redis-server，出现下面的内容，说明启动成功了  在另一台">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2020/11/24/hello-world/index.html">
+<meta property="og:title" content="cym 的博客">
+<meta property="og:url" content="http://example.com/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/index.html">
 <meta property="og:site_name" content="cym 的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 欢迎访问我">
+<meta property="og:description" content="Redis安装卸载以及设置自启动 到官网下载redis的稳定版本    安装gcc编译环境  1yum install gcc-c++     解压  1tar -zxvf redis-6.2.2.tar.gz   进入到对应的文件中  1cd redis-6.2.2   编译  1make   运行  进入src目录下，输入.&#x2F;redis-server，出现下面的内容，说明启动成功了  在另一台">
 <meta property="og:locale">
-<meta property="article:published_time" content="2020-11-24T07:51:28.110Z">
-<meta property="article:modified_time" content="2020-11-24T08:46:02.981Z">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210421182511857.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210421184434847.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210421184735450.png">
+<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210421191327650.png">
+<meta property="article:published_time" content="2021-04-21T12:16:29.170Z">
+<meta property="article:modified_time" content="2021-04-21T12:16:29.170Z">
 <meta property="article:author" content="cym">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210421182511857.png">
 
-<link rel="canonical" href="http://example.com/2020/11/24/hello-world/">
+<link rel="canonical" href="http://example.com/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/">
 
 
 <script id="page-configurations">
@@ -45,7 +50,7 @@
   };
 </script>
 
-  <title>Hello World | cym 的博客</title>
+  <title> | cym 的博客</title>
   
 
 
@@ -151,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/24/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -164,7 +169,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          
         </h1>
 
         <div class="post-meta">
@@ -173,9 +178,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-11-24 15:51:28 / 修改时间：16:46:02" itemprop="dateCreated datePublished" datetime="2020-11-24T15:51:28+08:00">2020-11-24</time>
+              <time title="创建时间：2021-04-21 20:16:29" itemprop="dateCreated datePublished" datetime="2021-04-21T20:16:29+08:00">2021-04-21</time>
             </span>
 
           
@@ -189,24 +193,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<p>欢迎访问我的个人主页， 我的主页主要围绕以下内容：</p>
+        <h3 id="Redis安装卸载以及设置自启动"><a href="#Redis安装卸载以及设置自启动" class="headerlink" title="Redis安装卸载以及设置自启动"></a>Redis安装卸载以及设置自启动</h3><ol>
+<li>到官网下载redis的稳定版本</li>
+</ol>
+<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421182511857.png" alt="image-20210421182511857"></p>
+<ol start="2">
+<li>安装gcc编译环境</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>解压</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-6.2.2.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>进入到对应的文件中</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd redis-6.2.2</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>编译</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>运行</li>
+</ol>
+<p>进入src目录下，输入<code>./redis-server</code>，出现下面的内容，说明启动成功了</p>
+<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421184434847.png" alt="image-20210421184434847"></p>
+<p>在另一台虚拟机上连接测试：</p>
+<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421184735450.png" alt="image-20210421184735450"></p>
+<p>以上的这种方式的不便之处：</p>
 <ul>
-<li>java后端开发</li>
-<li>深度学习图像分类</li>
+<li>需要进入src的目录下执行redis-server和redis-cli</li>
+<li>不能开启自启动</li>
 </ul>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>配置redis可执行文件的位置：</p>
+<p><code>cp redis-cli redis-server redis-sentinel /usr/local/bin</code></p>
+<p>之后可以在任何位置执行```redis-server`启动redis服务器。</p>
+<p>配置redis.conf文件</p>
+<ul>
+<li>设置redis-server后台模式运行</li>
+</ul>
+<p>daemonize yes</p>
+<ul>
+<li>设置dir，也就是存放RDB文件的位置为/usr/local/redis/路径下</li>
+<li>配置密码：当redis暴露在公网的时候可以保证安全性</li>
+</ul>
+<p>配置redis.conf自启动</p>
+<p>cp redis_init_script /etc/init.d/</p>
+<p>进入路径中，修改这个文件，按照自己的文件地址修改其中的内容</p>
+<p>vim redis_init_script</p>
+<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421191327650.png" alt="image-20210421191327650"></p>
+<p>配置redis开机自启动</p>
+<p>在redis_init_script的文件中添加下面两行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig: 22345 10 90  </span><br><span class="line"># description: Start and Stop redis </span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>设置开机自启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig redis_init_script on</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>然后reboot计算机，之后使用</p>
+<figure class="highlight ps"><figcaption><span>-ef | grep redis```观察redis-server是不是已经启动了</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">还可以使用下面的命令去启动或者关闭服务：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>打开redis命令:service 文件名称 start<br>关闭redis命令:service 文件名称 stop<br>设为开机启动:chkconfig 文件名称 on<br>设为开机关闭:chkconfig 文件名称 off</p>
+<pre><code>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+</code></pre>
 
     </div>
 
@@ -221,10 +275,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/11/24/test-my-site/" rel="next" title="test_my_site">
-      test_my_site <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/12/Redis%E5%AE%89%E8%A3%85/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/21/Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E8%B7%B5/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -284,7 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">Redis安装卸载以及设置自启动</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
