@@ -66,6 +66,166 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-git使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/02/14/git%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2021-02-14T06:56:06.838Z" itemprop="datePublished">2021-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="git使用"><a href="#git使用" class="headerlink" title="git使用"></a>git使用</h1><h4 id="1-查看所有常见的git命令"><a href="#1-查看所有常见的git命令" class="headerlink" title="1. 查看所有常见的git命令"></a>1. 查看所有常见的git命令</h4><blockquote>
+<p>$ git</p>
+</blockquote>
+<h4 id="2-子命令帮助文档"><a href="#2-子命令帮助文档" class="headerlink" title="2. 子命令帮助文档"></a>2. 子命令帮助文档</h4><blockquote>
+<p>git help <command></p>
+<p>git <command> -h</p>
+<p>git <command> –help</p>
+<p>man git-<command></p>
+</blockquote>
+<p>配置<code>git</code></p>
+<blockquote>
+<p>git config</p>
+</blockquote>
+<p>创建仓库之前就要完成</p>
+<blockquote>
+<p>git config –global user.name “”</p>
+<p>git config –global user.email xxx.com</p>
+</blockquote>
+<p>这些用户配置会显示再提交记录中</p>
+<p>配置级别介绍：</p>
+<p>–local 默认，高优先级： 只会影响本仓库，在.git/config文件中</p>
+<p>–global 中等优先级：影响素有当前用户的git仓库 c盘的用户目录下面 /.gitconfig</p>
+<p>–system低优先级: 影响所有用户的所有git仓库/etc/gitconfig</p>
+<p>初始化仓库：</p>
+<blockquote>
+<p>git init</p>
+</blockquote>
+<p>初始化之后，会形成一个.git文件，它记录了我们所有的提交信息和引用关系</p>
+<p>查看仓库的信息</p>
+<blockquote>
+<p> git status</p>
+</blockquote>
+<p>如果没有初始化仓库会提示没有.git这个文件夹</p>
+<blockquote>
+<p>git add</p>
+</blockquote>
+<p>添加文件内容到暂存区，同时文件被跟踪</p>
+<p>new file 表示第一次被跟踪，从untrack状态变成了track状态，这是文件级别的变化</p>
+<blockquote>
+<p>git add .</p>
+</blockquote>
+<p>批量添加多个文件</p>
+<p>如果出现了不想进行track的文件，并且已经添加到了暂存区中，我们需要进行忽略：</p>
+<p><code>.gitignore</code>的作用：</p>
+<ol>
+<li>在添加时忽略匹配的文件</li>
+<li>仅仅作用于未被追踪的文件</li>
+</ol>
+<p>相当于是在进行add的时候进行了一层过滤。</p>
+<p><img src alt=".gitignore的作用"></p>
+<p>如果文件已经通过add 进行了追踪，该如何删除？</p>
+<p>gitignore文件的写法：可以参考github上面的写法：</p>
+<p>从暂存区删除文件:</p>
+<blockquote>
+<p>git rm –cached：仅仅从暂存区删除</p>
+<p>git rm :从暂存区和工作目录删除</p>
+<p>git rm $(git ls-files –deleted)： 删除所有被跟踪，即在暂存区被记录了，但是在工作目录被删除了的文件</p>
+<p>git ls-files：到暂存区查找相关的文件</p>
+</blockquote>
+<p>git是一个基于内容寻址的系统，它记录的是内容并不是文件</p>
+<p>文件只要在暂存区，那它就是被追踪的状态</p>
+<blockquote>
+<p>git commit</p>
+</blockquote>
+<p>提交：根据暂存区的内容创建一个提交记录</p>
+<p><img src="/2021/02/14/git%E4%BD%BF%E7%94%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210214181612237.png" alt="image-20210214181612237"></p>
+<p>如图所示的三种状态：</p>
+<ol>
+<li>状态1：已经添加到了暂存区，但是还没有被提交</li>
+<li>状态2：已经被track的文件在本地工作空间发生了修改，但是修改还没有提交到暂存区</li>
+<li>状态3：表示还没有被添加到暂存区，没有被track</li>
+</ol>
+<p><strong>疑问：提交之后，暂存区还有这些已经提交的文件吗？</strong></p>
+<blockquote>
+<p>git commit -a -m “”</p>
+</blockquote>
+<p>这个命令可以免除使用<code> git add</code>，直接添加到暂存区，然后再提交（前提是对于已经被追踪了的文件）</p>
+<blockquote>
+<p>git log</p>
+</blockquote>
+<p>查看提交的历史记录：</p>
+<p>只有处于暂存区的内容才能够被提交上去，git是基于内容进行管理的系统，所以说同一个文件可以处于两个不同的区域。</p>
+<p><img src="/2021/02/14/git%E4%BD%BF%E7%94%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210214182601726.png" alt="image-20210214182601726"></p>
+<p>如图所示，虽然已经进行了提交，但是本地工作空间的内容还是没有改变。</p>
+<p><img src="/2021/02/14/git%E4%BD%BF%E7%94%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210214182716193.png" alt="image-20210214182716193"></p>
+<p>Author：前面通过<code>git config</code>配置的提交信息</p>
+<p>第一行是每一个提交对应的SHA-1编码</p>
+<p>可以通过以下的参数让显示信息更加美观</p>
+<p><code>git log --oneline</code>这样只会显示比较短的SHA-1编码</p>
+<p><img src="/2021/02/14/git%E4%BD%BF%E7%94%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210214183021153.png" alt="image-20210214183021153"></p>
+<p>有时候只是希望使用hash数值进行定位以及后续的操作。6~7位就可以证明这个hash值的唯一性。</p>
+<p>配置日志的显示格式：</p>
+<blockquote>
+<p>git log –color –graph –pretty=format:</p>
+<p>‘%Cread%h%Creset -%(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)&lt;%an&gt;%Creset’ –abbrev-commit</p>
+</blockquote>
+<p>它的显示结果可以表现出分支的合并过程</p>
+<p>取别名：</p>
+<blockquote>
+<p>git config alias.name <fullcommand></fullcommand></p>
+</blockquote>
+<p>即：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.lg &quot;log --color --graph --pretty&#x3D;format:&#39;%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)&lt;%an&gt;%Creset&#39; --abbrev-commit&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>然后就可以再任何一个仓库通过</p>
+<blockquote>
+<p>git lg</p>
+</blockquote>
+<p>来执行了~~~</p>
+<p><img src="/2021/02/14/git%E4%BD%BF%E7%94%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210214184335726.png" alt="image-20210214184335726"></p>
+<p>目前为止，我们通过<code>git config</code>进行了若干设置，这些设置都可以在<code>.git/gitconfig</code>中进行查看。</p>
+<p>目前进行了一个提交以及三个设置，查看.git目录：</p>
+<p>显示不同版本之间的差异：</p>
+<blockquote>
+<p><code>git diff </code>： 工作目录和暂存区之间的差异</p>
+<p><code>git diff --cached [reference]</code>：暂存区和某次提交之间的差异，默认是<code>HEAD</code>，head指向当前的提交</p>
+<p><code>git diff &lt;reference&gt;</code>工作目录和某次提交之间的差异</p>
+</blockquote>
+<p><code>git diff commit1 commit2</code>:查看两次体加之间的变化</p>
+<p><code>git diff --cached Head</code>:查看<code>head</code>执行的当前提交和暂存区之间的差异，这个顺序是可以反着的吧</p>
+<p><code>git diff</code>:查看本地工作空间和暂存区之间的差异</p>
+<p><code>git diff commit1</code>：查看<code>commit1</code>和工作目录之间的差异</p>
+<p>撤销本地的修改：注意这个不是版本的回退</p>
+<p><code>git checkout --file</code>将文件内容从暂存区复制到工作目录，当工作目录有改动，但是还没有提交到暂存区，会丢弃更改，小心使用。</p>
+<p><code>git reset HEAD &lt;file&gt;</code> 取消文件内容的暂存状态，将文件内容从上次提交复制到暂存区</p>
+<p><code>git checkout HEAD --file</code>将内容从上次提交复制到工作目录</p>
+<p><a target="_blank" rel="noopener" href="https://marklodato.github.io/visual-git-guide/index-en.html?no-svg">https://marklodato.github.io/visual-git-guide/index-en.html?no-svg</a></p>
+<p>今日计划：</p>
+<p>将git这个远程的部分也看完</p>
+<p>视频笔记总结完</p>
+<p>研究下上次删了idea之后为啥会消失的问题</p>
+<p>录制Integer++视频</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/02/14/git%E4%BD%BF%E7%94%A8/" data-id="ckrjyzo8s00094w7k0lcpe7aw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-lalala" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/02/11/lalala/" class="article-date">
@@ -78,7 +238,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id=""><a href="#" class="headerlink" title=""></a></h3><ul>
+        <h3 id><a href="#" class="headerlink" title></a></h3><ul>
 <li><p>写的代码是不是有重复</p>
 </li>
 <li><p>是不是方便扩展，如果增加其他的情况，能否良好适应</p>
@@ -96,7 +256,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/11/lalala/" data-id="ckrit5tom000cd07k0kkrgm77" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/02/11/lalala/" data-id="ckrjyzo8x000d4w7kdb225sqs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -127,7 +287,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/10/Pr%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%B7%B1%E5%96%9C%E6%AC%A2%E7%9A%84%E5%AD%97%E4%BD%93/" data-id="ckrit5tof0003d07kbadwhm8v" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/02/10/Pr%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%B7%B1%E5%96%9C%E6%AC%A2%E7%9A%84%E5%AD%97%E4%BD%93/" data-id="ckrjyzo8o00034w7kfhcb7o4m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -163,7 +323,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/24/test-my-site/" data-id="ckhw068gl0001t07kgnn80ff8" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/24/test-my-site/" data-id="ckrjyzo8z000g4w7k7kw1ht7h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -217,7 +377,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/24/hello-world/" data-id="ckhw068fv0000t07kaguc4foe" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2020/11/24/hello-world/" data-id="ckrjyzo8x000c4w7kazdr8hn6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -277,6 +437,10 @@
       <ul>
         
           <li>
+            <a href="/2021/07/26/%E7%BB%83%E4%B9%A0/">练习</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">日志框架介绍</a>
           </li>
         
@@ -290,10 +454,6 @@
         
           <li>
             <a href="/2021/04/21/Redis%E7%9A%84%E5%88%86%E5%8C%BA/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/21/Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E8%B7%B5/">(no title)</a>
           </li>
         
       </ul>

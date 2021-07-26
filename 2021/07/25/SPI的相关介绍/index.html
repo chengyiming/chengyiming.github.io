@@ -7,38 +7,38 @@
   
   <title>SPI的相关介绍 | cym 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="[TOC] SPI思想以及在各种框架中的使用​        SPI全称是Service Provider Interface， 是JDK内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的系统指的是服务的调用者。很多框架都使用了SPI的机制，接下来我们将分析几个知名框架的源码种包含的">
+  <meta name="description" content="[TOC]    SPI思想以及在各种框架中的使用​        SPI全称是Service Provider Interface， 是JDK内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的系统指的是服务的调用者。很多框架都使用了SPI的机制，接下来我们将分析几个知名框架的源码种包">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SPI的相关介绍">
 <meta property="og:url" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="cym 的博客">
-<meta property="og:description" content="[TOC] SPI思想以及在各种框架中的使用​        SPI全称是Service Provider Interface， 是JDK内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的系统指的是服务的调用者。很多框架都使用了SPI的机制，接下来我们将分析几个知名框架的源码种包含的">
+<meta property="og:description" content="[TOC]    SPI思想以及在各种框架中的使用​        SPI全称是Service Provider Interface， 是JDK内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的系统指的是服务的调用者。很多框架都使用了SPI的机制，接下来我们将分析几个知名框架的源码种包">
 <meta property="og:locale">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725150001836.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725152041527.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725153327980.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725161023861.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725180146261.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725180309057.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725180605194.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725181141429.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725183319313.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725195255119.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725195402939.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725195620272.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231019401.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231219902.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231304662.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231700641.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231721922.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231443042.png">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725231536115.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725150001836.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725152041527.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725153327980.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725161023861.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725180146261.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725180309057.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725180605194.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725181141429.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725183319313.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725195255119.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725195402939.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725195620272.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231019401.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231219902.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231304662.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231700641.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231721922.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231443042.png">
+<meta property="og:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231536115.png">
 <meta property="article:published_time" content="2021-07-25T06:28:19.000Z">
-<meta property="article:modified_time" content="2021-07-26T00:48:30.582Z">
+<meta property="article:modified_time" content="2021-07-26T01:46:58.089Z">
 <meta property="article:author" content="cym">
 <meta property="article:tag" content="SPI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210725150001836.png">
+<meta name="twitter:image" content="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725150001836.png">
   
     <link rel="alternate" href="/atom.xml" title="cym 的博客" type="application/atom+xml">
   
@@ -109,12 +109,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <meta name="referrer" content="no-referrer"/>
+        <meta name="referrer" content="no-referrer">
+[TOC]
 
-<p>[TOC]</p>
+
+
 <h3 id="SPI思想以及在各种框架中的使用"><a href="#SPI思想以及在各种框架中的使用" class="headerlink" title="SPI思想以及在各种框架中的使用"></a><code>SPI</code>思想以及在各种框架中的使用</h3><p>​        <code>SPI</code>全称是<code>Service Provider Interface</code>， 是<code>JDK</code>内置一种服务发现机制，可以用于实现功能模块的热拔插能力，系统只需要定义相关的接口，而服务的提供者实现相关的接口，系统便可以根据配置文件来决定调用哪一个服务。这里的<strong>系统</strong>指的是服务的调用者。很多框架都使用了<code>SPI</code>的机制，接下来我们将分析几个知名框架的源码种包含的<code>SPI</code>机制，同时在最后自己实现一个模拟<code>SPI</code>功能的代码。</p>
 <h4 id="一、JDBC中的SPI"><a href="#一、JDBC中的SPI" class="headerlink" title="一、JDBC中的SPI"></a>一、<code>JDBC</code>中的<code>SPI</code></h4><h5 id="场景介绍："><a href="#场景介绍：" class="headerlink" title="场景介绍："></a>场景介绍：</h5><p>​        在使用数据库的时候，我们首先要导入mysql或者oracle等数据库厂商提供的驱动包。导入jar包之后可以发现它们都存在一个相同的目录结构。</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725150001836.png" alt="image-20210725150001836"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725150001836.png" class title="This is an test image">
+
+
+
 <p>​        在/META-INF/services目录下，都有一个名字是<code>Java.sql.Driver</code>的文件，里面的内容分别如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">oracle.jdbc.OracleDriver</span><br></pre></td></tr></table></figure>
 
@@ -136,27 +141,18 @@
 <h5 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h5><p>  首先看一下<code>DriverManager</code>的实现，它包含了一个静态代码块，在类进行初始化的时候，执行静态代码块中的方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DriverManager</span> </span>&#123;</span><br><span class="line">    ...<span class="comment">//这里省去一些其他代码</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        loadInitialDrivers();</span><br><span class="line">        println(<span class="string">&quot;JDBC DriverManager initialized&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><figcaption><span>```loadInitialDrivers()```方法：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-<p>private static void loadInitialDrivers() {<br>    …<br>    AccessController.doPrivileged(new PrivilegedAction<Void>() {<br>        public Void run() {</p>
-<pre><code>        ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);
-        Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();
+<figure class="highlight plain"><figcaption><span>```loadInitialDrivers()```方法：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#96;&#96;&#96;java</span><br><span class="line">private static void loadInitialDrivers() &#123;</span><br><span class="line">	...</span><br><span class="line">    AccessController.doPrivileged(new PrivilegedAction&lt;Void&gt;() &#123;</span><br><span class="line">        public Void run() &#123;</span><br><span class="line"></span><br><span class="line">            ServiceLoader&lt;Driver&gt; loadedDrivers &#x3D; ServiceLoader.load(Driver.class);</span><br><span class="line">            Iterator&lt;Driver&gt; driversIterator &#x3D; loadedDrivers.iterator();</span><br><span class="line"></span><br><span class="line">            try&#123;</span><br><span class="line">                while(driversIterator.hasNext()) &#123;</span><br><span class="line">                    driversIterator.next();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; catch(Throwable t) &#123;</span><br><span class="line">            &#x2F;&#x2F; Do nothing</span><br><span class="line">            &#125;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        try&#123;
-            while(driversIterator.hasNext()) &#123;
-                driversIterator.next();
-            &#125;
-        &#125; catch(Throwable t) &#123;
-        // Do nothing
-        &#125;
-        return null;
-    &#125;
-&#125;);
-...</code></pre>
-<p>}</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们来分别分析一下其中比较重要的代码：</span><br><span class="line"></span><br><span class="line">###### 1、初始化&#96;ServiceLoader&#96;</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;java</span><br><span class="line">ServiceLoader&lt;Driver&gt; loadedDrivers &#x3D; ServiceLoader.load(Driver.class);</span><br></pre></td></tr></table></figure>
+<p>我们来分别分析一下其中比较重要的代码：</p>
+<h6 id="1、初始化ServiceLoader"><a href="#1、初始化ServiceLoader" class="headerlink" title="1、初始化ServiceLoader"></a>1、初始化<code>ServiceLoader</code></h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);</span><br></pre></td></tr></table></figure>
 
-<p>这一段方法构造了一个本质就是构建了一个<code>ServiceLoader</code>对象。该对象中包含了一下几个部分</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725152041527.png" alt="image-20210725152041527"></p>
+<p>这一段方法构造了一个本质就是构建了一个<code>ServiceLoader</code>对象。该对象中包含了一下几个部分:</p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725152041527.png" class title="This is an test image">
+
+
+
+
+
 <h6 id="2、获得迭代器"><a href="#2、获得迭代器" class="headerlink" title="2、获得迭代器"></a>2、获得迭代器</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();</span><br></pre></td></tr></table></figure>
 
 <p>​        这里就拿到了<code>loadedDrivers</code>内部的迭代器，也就是那个<code>lookupIterator</code>， 走进这个迭代器，看看在迭代器执行过程中发生了什么：</p>
@@ -167,9 +163,17 @@
 
 <p>​        在上图中，<code>classLoader.getResources</code>方法可以获得所有的jar包以及当前项目类路径下路径名称是<code>fullName</code>的资源，就可以获得真正驱动器Driver的全类名。</p>
 <p>​        之后在<code>nextService</code>中，初始化驱动器对象，同时将其返回。</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725153327980.png" alt="image-20210725153327980"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725153327980.png" class title="This is an test image">
+
+
+
+
+
 <p>​         至此，也就是说，执行<code>DriverManager</code>的<code>loadInitialDrivers()</code>方法之后，所有实现了<code>java.sql.Driver</code>接口的类都已经加载到了内存，同时初始化了它们的对象。</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725161023861.png" alt="image-20210725161023861"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725161023861.png" class title="This is an test image">
+
+
+
 <h5 id="多个驱动加载哪个"><a href="#多个驱动加载哪个" class="headerlink" title="多个驱动加载哪个"></a>多个驱动加载哪个</h5><p>​        但是现在还有问题没有解答，得到的连接为什么是<code>Mysql</code>的，<code>oracle</code>类明明也进行了初始化。</p>
 <p>​        下面是得到数据库连接的方法，<code>registeredDrivers</code>是个List，其中包含了两个注册的驱动，这一点和我们的猜想是一致的。在这段逻辑中，只要取出的第一个连接不是空，那就不再进行后面的判断了。因此，在最开始的例子中，返回的结果是<code>mysql</code>的连接。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        String url, java.util.Properties info, Class&lt;?&gt; caller)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;  </span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ...</span><br><span class="line">                    Connection con = aDriver.driver.connect(url, info);</span><br><span class="line">                <span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    ...</span><br><span class="line">                        <span class="keyword">return</span> (con);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">                ...</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
@@ -188,37 +192,84 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ConfigurableApplicationContext <span class="title">run</span><span class="params">(Class&lt;?&gt;[] primarySources, String[] args)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> SpringApplication(primarySources).run(args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>构建了一个<code>SpringApplication</code>对象，内部做的事情如下：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725180146261.png" alt="image-20210725180146261"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725180146261.png" class title="This is an test image">
+
+
+
+
+
 <p>追进<code>getSpringFactoriesInstances</code>这个方法，</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725180309057.png" alt="image-20210725180309057"></p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725180605194.png" alt="image-20210725180605194"></p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725181141429.png" alt="image-20210725181141429"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725180309057.png" class title="This is an test image">
+
+
+
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725180605194.png" class title="This is an test image">
+
+
+
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725181141429.png" class title="This is an test image">
+
+
+
 <p><code>springboot</code>中的<code>SPI</code>和<code>JDK</code>中的稍微有些不一样，在springboot中更加偏重于发现类，这些类并不是是实现了某一个接口的类，而是和某个工厂类型相关的类。</p>
 <h4 id="3、slf4j中的SPI"><a href="#3、slf4j中的SPI" class="headerlink" title="3、slf4j中的SPI"></a>3、slf4j中的SPI</h4><p>​        <code>Simple Logging Facade for Java (SLF4J)</code> 充当各种日志框架（例如<code> java.util.logging</code>、<code>logback</code>、<code>log4j</code>）的简单外观或抽象，允许最终用户在部署时插入所需的日志框架。门面和框架之间使用桥接器完成桥接。</p>
 <p>当我们使用slf4j进行日志记录的时候，首先执行下面的代码：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725183319313.png" alt="image-20210725183319313"></p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725195255119.png" alt="image-20210725195255119"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725183319313.png" class title="This is an test image">
+
+
+
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725195255119.png" class title="This is an test image">
+
+
+
 <p>可以看到，日志类来源于工厂，说明这里的工厂就是根据不同的框架产生的。</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725195402939.png" alt="image-20210725195402939"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725195402939.png" class title="This is an test image">
+
+
+
 <p>工厂初始化</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725195620272.png" alt="image-20210725195620272"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725195620272.png" class title="This is an test image">
+
+
+
 <p>之后，使用得到工厂实例的单例对象，然后返回<code>Logger</code>对象即可。</p>
 <p>注意：如果有多个默认的工厂实现，使用第一个工厂，同时会把重复的问题记录下来。</p>
 <p>​        虽然<code>findPossibleStaticLoggerBinderPathSet</code>方法也是使用了<code>SPI</code>，但是并没有对类进行加载，它的作用仅限于记录有没有可用的日志框架。</p>
-<h4 id="手写一个SPI的应用"><a href="#手写一个SPI的应用" class="headerlink" title="手写一个SPI的应用"></a>手写一个<code>SPI</code>的应用</h4><p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231019401.png" alt="image-20210725231019401"></p>
+<h4 id="手写一个SPI的应用"><a href="#手写一个SPI的应用" class="headerlink" title="手写一个SPI的应用"></a>手写一个<code>SPI</code>的应用</h4><img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231019401.png" class title="This is an test image">
+
+
+
 <p>circle：表示圆形类</p>
 <p>rectangle：表示长方形类</p>
 <p>shape：表示形状接口</p>
 <p>main：运行主程序的部分</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231219902.png" alt="image-20210725231219902"></p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231304662.png" alt="image-20210725231304662"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231219902.png" class title="This is an test image">
+
+
+
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231304662.png" class title="This is an test image">
+
+
+
 <p>实现类的代码分别如下：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231700641.png" alt="image-20210725231700641"></p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231721922.png" alt="image-20210725231721922"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231700641.png" class title="This is an test image">
+
+
+
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231721922.png" class title="This is an test image">
+
+
+
 <p>主程序如下所示：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231443042.png" alt="image-20210725231443042"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231443042.png" class title="This is an test image">
+
+
+
 <p>结果：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210725231536115.png" alt="image-20210725231536115"></p>
+<img src="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/image-20210725231536115.png" class title="This is an test image">
+
+
+
 <h4 id="思考查询点："><a href="#思考查询点：" class="headerlink" title="思考查询点："></a>思考查询点：</h4><ol>
 <li><p>关于类的加载过程，静态代码块</p>
 </li>
@@ -235,7 +286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/" data-id="ckrjegs1j0000c07kfmqa8prw" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/" data-id="ckrjyzo8r00084w7kdoscd1sb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SPI/" rel="tag">SPI</a></li></ul>
@@ -309,6 +360,10 @@
       <ul>
         
           <li>
+            <a href="/2021/07/26/%E7%BB%83%E4%B9%A0/">练习</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">日志框架介绍</a>
           </li>
         
@@ -322,10 +377,6 @@
         
           <li>
             <a href="/2021/04/21/Redis%E7%9A%84%E5%88%86%E5%8C%BA/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/21/Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E8%B7%B5/">(no title)</a>
           </li>
         
       </ul>

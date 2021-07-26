@@ -14,12 +14,12 @@
 <meta property="og:site_name" content="cym 的博客">
 <meta property="og:description" content="matlab读取excel文件的每一列，绘制多条曲线需求： 读取excel文件中的其中三列数据，使用不同的颜色绘制曲线，比较三条曲线。 为图片设置标题，横纵坐标标题，同时设置每条曲线的名称 12345678910111213x &#x3D; 1:1:100 %x的范围是从1到100，每次增加1data &#x3D; xlsread(&quot;filepath&quot;) % 按照文件路径读取文件figure %">
 <meta property="og:locale">
-<meta property="og:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210228140733629.png">
+<meta property="og:image" content="http://example.com/2021/02/28/matlab%E8%AF%BB%E5%8F%96excel%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%EF%BC%8C%E7%BB%98%E5%88%B6%E5%A4%9A%E6%9D%A1%E6%9B%B2%E7%BA%BF/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210228140733629.png">
 <meta property="article:published_time" content="2021-02-28T05:24:47.950Z">
 <meta property="article:modified_time" content="2021-04-13T13:29:04.309Z">
 <meta property="article:author" content="cym">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210228140733629.png">
+<meta name="twitter:image" content="http://example.com/2021/02/28/matlab%E8%AF%BB%E5%8F%96excel%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%EF%BC%8C%E7%BB%98%E5%88%B6%E5%A4%9A%E6%9D%A1%E6%9B%B2%E7%BA%BF/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20210228140733629.png">
   
     <link rel="alternate" href="/atom.xml" title="cym 的博客" type="application/atom+xml">
   
@@ -86,12 +86,12 @@
 <figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">1</span>:<span class="number">1</span>:<span class="number">100</span> <span class="comment">%x的范围是从1到100，每次增加1</span></span><br><span class="line">data = xlsread(<span class="string">&quot;filepath&quot;</span>) <span class="comment">% 按照文件路径读取文件</span></span><br><span class="line"><span class="built_in">figure</span> <span class="comment">% 一张空的画布</span></span><br><span class="line"><span class="built_in">plot</span>(x, data(:,<span class="number">1</span>), <span class="string">&#x27;g&#x27;</span>)  <span class="comment">% 绘制第一列数据</span></span><br><span class="line"><span class="built_in">hold</span> on <span class="comment">% 将第一个图保存在图片中</span></span><br><span class="line"><span class="built_in">plot</span>(x, data(:,<span class="number">2</span>), <span class="string">&#x27;b&#x27;</span>) <span class="comment">%设置绿色</span></span><br><span class="line"><span class="built_in">hold</span> on <span class="comment">%保持图片</span></span><br><span class="line"><span class="built_in">plot</span>(x, data(:,<span class="number">3</span>), <span class="string">&#x27;r&#x27;</span>)  <span class="comment">% 设置蓝色</span></span><br><span class="line"><span class="built_in">legend</span>(<span class="string">&#x27;Deepcaps&#x27;</span>,<span class="string">&#x27;model with struct1(ResCaps)&#x27;</span>,<span class="string">&#x27;model with struct2&#x27;</span>) <span class="comment">%依次为三条曲线设置名称</span></span><br><span class="line">title(<span class="string">&quot;Comparison of test accuracy of different models on F-MINIST&quot;</span>)</span><br><span class="line">xlabel(<span class="string">&quot;Iteration nums&quot;</span>)</span><br><span class="line">ylabel(<span class="string">&quot;Test accuracy&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>最终效果：</p>
-<p><img src="C:\Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210228140733629.png" alt="image-20210228140733629"></p>
+<p><img src="/2021/02/28/matlab%E8%AF%BB%E5%8F%96excel%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%EF%BC%8C%E7%BB%98%E5%88%B6%E5%A4%9A%E6%9D%A1%E6%9B%B2%E7%BA%BF/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210228140733629.png" alt="image-20210228140733629"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/28/matlab%E8%AF%BB%E5%8F%96excel%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%EF%BC%8C%E7%BB%98%E5%88%B6%E5%A4%9A%E6%9D%A1%E6%9B%B2%E7%BA%BF/" data-id="ckrit5tol0009d07k84218etr" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2021/02/28/matlab%E8%AF%BB%E5%8F%96excel%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%EF%BC%8C%E7%BB%98%E5%88%B6%E5%A4%9A%E6%9D%A1%E6%9B%B2%E7%BA%BF/" data-id="ckrjyzo8y000f4w7k6584a8ga" class="article-share-link">Share</a>
       
       
     </footer>
@@ -163,6 +163,10 @@
       <ul>
         
           <li>
+            <a href="/2021/07/26/%E7%BB%83%E4%B9%A0/">练习</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">日志框架介绍</a>
           </li>
         
@@ -176,10 +180,6 @@
         
           <li>
             <a href="/2021/04/21/Redis%E7%9A%84%E5%88%86%E5%8C%BA/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/21/Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E8%B7%B5/">(no title)</a>
           </li>
         
       </ul>
