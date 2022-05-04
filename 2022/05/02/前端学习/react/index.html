@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>cym 的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="React中的组件包含了类式组件和方法组件。 如果不初始化state或者不进行方法绑定，不需要为React组件实现构造函数。 在React组件挂载之前，会调用它的构造函数，在为React.Component自类是西安构造函数hi。 在React中，构造函数仅仅用于下面的两种情况：  给this.state复制对象初始化内部的state  为时间处理函数绑定实例。     但是这两种方式都有其他的方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cym 的博客">
+<meta property="og:url" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/index.html">
+<meta property="og:site_name" content="cym 的博客">
+<meta property="og:description" content="React中的组件包含了类式组件和方法组件。 如果不初始化state或者不进行方法绑定，不需要为React组件实现构造函数。 在React组件挂载之前，会调用它的构造函数，在为React.Component自类是西安构造函数hi。 在React中，构造函数仅仅用于下面的两种情况：  给this.state复制对象初始化内部的state  为时间处理函数绑定实例。     但是这两种方式都有其他的方">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Blog/blog/source_posts/前端学习/02_原理图/react生命周期(旧).png">
+<meta property="og:image" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20220504115713816.png">
+<meta property="og:image" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20220504120334687.png">
+<meta property="og:image" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Users/15288/AppData/Roaming/Typora/typora-user-images/image-20220504121357511.png">
+<meta property="og:image" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Blog/blog/source_posts/前端学习/02_原理图/react生命周期(新).png">
+<meta property="article:published_time" content="2022-05-02T14:23:38.065Z">
+<meta property="article:modified_time" content="2022-05-04T05:04:46.794Z">
+<meta property="article:author" content="cym">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Blog/blog/source_posts/前端学习/02_原理图/react生命周期(旧).png">
+  
+    <link rel="alternate" href="/atom.xml" title="cym 的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">cym 的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-前端学习/react" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/" class="article-date">
+  <time datetime="2022-05-02T14:23:38.065Z" itemprop="datePublished">2022-05-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>React中的组件包含了类式组件和方法组件。</p>
+<p>如果不初始化state或者不进行方法绑定，不需要为React组件实现构造函数。</p>
+<p>在React组件挂载之前，会调用它的构造函数，在为React.Component自类是西安构造函数hi。</p>
+<p>在React中，构造函数仅仅用于下面的两种情况：</p>
+<ul>
+<li><p>给this.state复制对象初始化内部的state</p>
+</li>
+<li><p>为时间处理函数绑定实例。</p>
+</li>
+</ul>
+<p>  但是这两种方式都有其他的方式可以实现，所以构造函数是可有可无的。</p>
+<p>  参考下面的案理：</p>
+<p>  state的赋值方式，可以使用简写的方式，也可以使用复杂的方式，如下：</p>
+<p>  state={} 或者 this.state={}</p>
+<h3 id="组件实例的核心属性："><a href="#组件实例的核心属性：" class="headerlink" title="组件实例的核心属性："></a>组件实例的核心属性：</h3><ul>
+<li><p>Props</p>
+<p>构造器是否接收Props，是否传递给super，取决于是否希望在构造器中通过this访问Props，这种场景比较少。但是类中的构造器能不写就不写。</p>
+<p>类中的Prop：</p>
+</li>
+</ul>
+<h3 id="Function"><a href="#Function" class="headerlink" title="Function:"></a>Function:</h3><p>  函数式组件使用Props</p>
+<p>  Props:</p>
+<p>  Props使用总结：</p>
+<p>  可以使用…的方式进行批量使用，如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const p &#x3D; &#123;name:&#39;cheng&#39;, age:18, sex:&#39;女&#39;&#125;</span><br><span class="line">ReactDOM.render&#x3D;(&lt;Person &#123;...p&#125;&#x2F;&gt;, document.getElementById(&#39;test1&#39;))</span><br></pre></td></tr></table></figure>
+
+<p>  对于类式组件，传入的属性会被传递得到类的<code>this.Props</code>属性中。</p>
+<p>  相关的限制：标准的使用就是要进行一些限制。</p>
+<p>  如下：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 对标签的属性进行类型和必要性的限制</span><br><span class="line">Person.propTypes&#x3D;&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Person.propTypes这是react的属性，但是下面大写的PropTypes是引入的库。</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 置定默认的标签属性值</span><br><span class="line">Person.defaultProps &#x3D; &#123;</span><br><span class="line">	sex:&#39;&#39;,</span><br><span class="line">	age:18</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="refs"><a href="#refs" class="headerlink" title="refs"></a>refs</h3><p>  案例：</p>
+<p>  实现如下效果：</p>
+<p>  输入框1     按钮     输入框2</p>
+<p>  点击按钮，则alert输入框1的内容，第二个输入框失去焦点之后，alert输入框2的内容。</p>
+<h5 id="字符串形式的ref："><a href="#字符串形式的ref：" class="headerlink" title="字符串形式的ref："></a>字符串形式的ref：</h5><p>  这种写法已经不被推荐使用了</p>
+<p>  refs可以收集所有的包含属性ref的组件，通过解构赋值就可以获取到ref中的组件。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">      &lt;div id&#x3D;&quot;test1&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react@17&#x2F;umd&#x2F;react.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">      &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react-dom@17&#x2F;umd&#x2F;react-dom.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;babel-standalone@6&#x2F;babel.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">      &lt;script type&#x3D;&quot;text&#x2F;babel&quot;&gt;</span><br><span class="line">        class Demo extends React.Component&#123;</span><br><span class="line">              showData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                const &#123;input1&#125; &#x3D; this.refs</span><br><span class="line">                  console.log(this)</span><br><span class="line">                  alert(input1.value)</span><br><span class="line">  </span><br><span class="line">              &#125;</span><br><span class="line">              blurData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                  const &#123;input2&#125; &#x3D; this.refs</span><br><span class="line">                  alert(input2.value)</span><br><span class="line">              &#125;</span><br><span class="line">              render() &#123;</span><br><span class="line">                  return (</span><br><span class="line">                      &#x2F;&#x2F; 给button定义方法，实例的方法需要加上this</span><br><span class="line">                      &lt;div&gt;</span><br><span class="line">                          &lt;input type&#x3D;&#39;text&#39; ref&#x3D;&#39;input1&#39; placeholder&#x3D;&quot;点击按钮&quot;&gt;&lt;&#x2F;input&gt;</span><br><span class="line">                          &lt;button onClick&#x3D;&#123;this.showData&#125;&gt;点我提示数据&lt;&#x2F;button&gt;</span><br><span class="line">                          &lt;input type&#x3D;&#39;text&#39; onBlur &#x3D; &#123;this.blurData&#125; ref&#x3D;&#39;input2&#39; placeholder&#x3D;&#39;失去焦点提示数据&#39;&gt;&lt;&#x2F;input&gt;</span><br><span class="line">                          </span><br><span class="line">                  &lt;&#x2F;div&gt;        </span><br><span class="line">                  )</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          ReactDOM.render(&lt;Demo name&#x3D;&quot;jerry&quot; sex&#x3D;&quot;吗&quot; age&#x3D;&#123;18&#125;&#x2F;&gt;, document.getElementById(&#39;test1&#39;))</span><br><span class="line">      &lt;&#x2F;script&gt;</span><br><span class="line">  &lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="回调形式的ref："><a href="#回调形式的ref：" class="headerlink" title="回调形式的ref："></a>回调形式的ref：</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Demo extends React.Component&#123;</span><br><span class="line">            showData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                console.log(this)</span><br><span class="line">                alert(this.input1.value)</span><br><span class="line">            &#125;</span><br><span class="line">            render() &#123;</span><br><span class="line">                return (</span><br><span class="line"></span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                        &lt;input type&#x3D;&#39;text&#39; ref&#x3D;&#123;(node) &#x3D;&gt; &#123; </span><br><span class="line">                            console.log(&#39;@&#39;, node)                           </span><br><span class="line">                            this.input1 &#x3D; node&#125;&#125; placeholder&#x3D;&quot;点击按钮&quot;&gt;&lt;&#x2F;input&gt;</span><br><span class="line">                        &lt;button onClick&#x3D;&#123;this.showData&#125;&gt;点我提示数据&lt;&#x2F;button&gt;</span><br><span class="line">                    </span><br><span class="line">                &lt;&#x2F;div&gt;        </span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>  回调的调用次数</p>
+<p>  <a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/docs/refs-and-the-dom.html">https://zh-hans.reactjs.org/docs/refs-and-the-dom.html</a></p>
+<p>  更新的演示：</p>
+<p>  状态驱动页面显示，也就是状态更改的时候，会重新调用render</p>
+<p>  这种内联的回调函数会在状态更新的时候【state发生变化的时候】进行两次调用，第一次是将函数清空，</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;test1&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react@17&#x2F;umd&#x2F;react.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react-dom@17&#x2F;umd&#x2F;react-dom.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;babel-standalone@6&#x2F;babel.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script type&#x3D;&quot;text&#x2F;babel&quot;&gt;</span><br><span class="line">        class Demo extends React.Component&#123;</span><br><span class="line">     </span><br><span class="line">            state &#x3D; &#123;ishot:true&#125;</span><br><span class="line">           </span><br><span class="line">            showData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                alert(this.input1.value)</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">            &#x2F;&#x2F; node &#x3D; (node) &#x3D;&gt; &#123;</span><br><span class="line">            &#x2F;&#x2F;     console.log(&#39;@&#39;)</span><br><span class="line">            &#x2F;&#x2F;     this.input1 &#x3D; node</span><br><span class="line">            &#x2F;&#x2F; &#125;</span><br><span class="line"></span><br><span class="line">            changeWeather &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                const &#123;ishot&#125; &#x3D; this.state</span><br><span class="line">                this.setState(&#123;ishot:!ishot&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            render() &#123;</span><br><span class="line">                const &#123;ishot&#125; &#x3D; this.state</span><br><span class="line">                return (</span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                        &lt;h2&gt;今天的天气很&#123;ishot ? &#39;炎热&#39;: &#39;寒冷&#39;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">                        &lt;input type&#x3D;&#39;text&#39; ref&#x3D;&#123;(node) &#x3D;&gt; &#123; </span><br><span class="line">                            console.log(&#39;@&#39;, node)                           </span><br><span class="line">                            this.input1 &#x3D; node&#125;&#125; placeholder&#x3D;&quot;点击按钮&quot;&gt;&lt;&#x2F;input&gt;</span><br><span class="line">                        &lt;button onClick&#x3D;&#123;this.showData&#125;&gt;点我提示数据&lt;&#x2F;button&gt;</span><br><span class="line">                        &lt;button onClick&#x3D;&#123;this.changeWeather&#125;&gt;点击变换天气&lt;&#x2F;button&gt;</span><br><span class="line">                    </span><br><span class="line">                &lt;&#x2F;div&gt;        </span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ReactDOM.render(&lt;Demo name&#x3D;&quot;jerry&quot; sex&#x3D;&quot;吗&quot; age&#x3D;&#123;18&#125;&#x2F;&gt;, document.getElementById(&#39;test1&#39;))</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>  如果不希望有两次调用的话，可以不使用内联的方式，但是两种方式区别不大，不用太在意。</p>
+<p>  不用内联的话就是下面这种调用方式：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;test1&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react@17&#x2F;umd&#x2F;react.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react-dom@17&#x2F;umd&#x2F;react-dom.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;babel-standalone@6&#x2F;babel.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script type&#x3D;&quot;text&#x2F;babel&quot;&gt;</span><br><span class="line">        class Demo extends React.Component&#123;</span><br><span class="line">     </span><br><span class="line">            state &#x3D; &#123;ishot:true&#125;</span><br><span class="line">           </span><br><span class="line">            showData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                alert(this.input1.value)</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">            node &#x3D; (node) &#x3D;&gt; &#123;</span><br><span class="line">                console.log(&#39;@&#39;, this, node)</span><br><span class="line">                this.input1 &#x3D; node</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            changeWeather &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                const &#123;ishot&#125; &#x3D; this.state</span><br><span class="line">                this.setState(&#123;ishot:!ishot&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            render() &#123;</span><br><span class="line">                const &#123;ishot&#125; &#x3D; this.state</span><br><span class="line">                return (</span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                        &lt;h2&gt;今天的天气很&#123;ishot ? &#39;炎热&#39;: &#39;寒冷&#39;&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">                        &lt;input type&#x3D;&#39;text&#39; ref&#x3D;&#123;this.node&#125; placeholder&#x3D;&quot;点击按钮&quot;&gt;&lt;&#x2F;input&gt;</span><br><span class="line">                        &lt;button onClick&#x3D;&#123;this.showData&#125;&gt;点我提示数据&lt;&#x2F;button&gt;</span><br><span class="line">                        &lt;button onClick&#x3D;&#123;this.changeWeather&#125;&gt;点击变换天气&lt;&#x2F;button&gt;</span><br><span class="line">                    </span><br><span class="line">                &lt;&#x2F;div&gt;        </span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ReactDOM.render(&lt;Demo name&#x3D;&quot;jerry&quot; sex&#x3D;&quot;吗&quot; age&#x3D;&#123;18&#125;&#x2F;&gt;, document.getElementById(&#39;test1&#39;))</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="create形式的ref："><a href="#create形式的ref：" class="headerlink" title="create形式的ref："></a>create形式的ref：</h5><p>  ReactRef()调用之后可以返回一个容器。该容器可以存储被ref所标识的节点。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Demo extends React.Component&#123;</span><br><span class="line">    showData &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">        console.log(this.myRef)</span><br><span class="line">        &#x2F;&#x2F; 解构赋值的时候名字一定要对应上</span><br><span class="line">        const &#123;current&#125; &#x3D; this.myRef</span><br><span class="line">        alert(current.value)</span><br><span class="line">    &#125;</span><br><span class="line">    myRef &#x3D; React.createRef()</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;input type&#x3D;&#39;text&#39; ref&#x3D;&#123;this.myRef&#125; placeholder&#x3D;&quot;点击按钮&quot;&gt;&lt;&#x2F;input&gt;</span><br><span class="line">                &lt;button onClick&#x3D;&#123;this.showData&#125;&gt;点我提示数据&lt;&#x2F;button&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;        </span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  这个容器是专用的，里面只能存放一个元素，如果后面还有元素，则后面的会把前面的挤掉。</p>
+<h5 id="render调用的次数是1-n："><a href="#render调用的次数是1-n：" class="headerlink" title="render调用的次数是1+n："></a>render调用的次数是1+n：</h5><p>  1是指第一次将组件放置在页面</p>
+<p>  n是指后续state更新时</p>
+<h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><p>  通过onXxx的属性指定事件处理函数（注意大小写）</p>
+<ul>
+<li><p>React使用的是自定义事件，而不是使用原生的DOM事件——这是为了更好的兼容性</p>
+</li>
+<li><p>React中的事件是通过事件委托的方式处理的【委托给最外层的元素】——为了高效</p>
+<p>通过event.target得达发生事件的DOM元素的对象，不要过度使用Refs</p>
+</li>
+</ul>
+<p>  省掉Refs的前提是：</p>
+<ul>
+<li><p>发生事件的元素和操作的元素是同一个。</p>
+<p>事件发生的时候箭头函数和会传入事件作为参数。event.target是指事件源，也就是发生事件的对象。</p>
+</li>
+</ul>
+<h4 id="非受控组件"><a href="#非受控组件" class="headerlink" title="非受控组件"></a>非受控组件</h4><p>  现用现取就是非受控。</p>
+<h4 id="受控组件"><a href="#受控组件" class="headerlink" title="受控组件"></a>受控组件</h4><p>  表单携带参数的跳转</p>
+<p>  页面中输入类的DOM在输入的时候就可以将数据维护在组件的状态中，这就是受控组件。</p>
+<p>  尽量使用受控组件，受控组件不使用refs， 避免refs滥用。</p>
+<h4 id="高阶函数："><a href="#高阶函数：" class="headerlink" title="高阶函数："></a>高阶函数：</h4><p>  注意区分：</p>
+<p>  将函数的返回值作为回调函数</p>
+<p>  将函数作为回调函数</p>
+<p>  saveFormData的返回值是一个函数，这个函数才是真正的onChange的回调，所以它的参数是event。</p>
+<p>  对象相关的知识：</p>
+<p>  切记：只能把一个函数作为回调。</p>
+<p>  saveFormData就是所谓的高阶函数。</p>
+<p>  高阶函数的定义：</p>
+<p>  如果一个函数满足下面的两个规范中的任何一个，那该函数就是高阶函数：</p>
+<ul>
+<li><p>某函数接受的参数是一个函数，该函数是一个高阶函数</p>
+</li>
+<li><p>某函数 调用完的返回值依然是一个函数，那该函数就是高阶函数</p>
+<p>常见的高阶函数：</p>
+<p>Promise setTimeOut这两个都是高阶函数，都是接收df函数。 arr.map()数组相关一些函数也是高阶函数。</p>
+</li>
+</ul>
+<p>  函数的柯里化：</p>
+<p>  通过函数调用继续返回函数的方式，实现多次接受参数最后统一处理的函数编码形式。</p>
+<h4 id="函数柯里化"><a href="#函数柯里化" class="headerlink" title="函数柯里化"></a>函数柯里化</h4><p>  接下来学习react中最重要的概念，组件的生命周期</p>
+<h4 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h4><p>  需求：</p>
+<p>  定义组件实现下面的功能</p>
+<ol>
+<li>让指定的文本做显示或隐藏的渐变动画</li>
+<li>从完全可见到完全消失，耗时29秒</li>
+<li>点击“不活了”，按钮从界面中卸载组件</li>
+</ol>
+<p>  组件的挂载和卸载，专业术语</p>
+<p>  React.unmountComponentAtNode(document.getElementById(“test”))</p>
+<p>  componentDidMount</p>
+<p>  这个方法和render方法一样都是组件类自己会调用的方法</p>
+<p>  render的调用时机：初始化渲染，状态更新</p>
+<p>  componentDidMount的调用时机：组件挂载在页面之后。</p>
+<p>  定时器setInterval这种方法就可以卸载这个方法里面。</p>
+<p>  如果卸载render中会出现死循环。</p>
+<p>  但是在卸载组件的时候会出现问题，组件中的定时器一直在开着，当组件删除的时候定时器还存在。所以我们需要在</p>
+<p>  生命周期回调函数：react帮调用的===生命周期钩子函数，因为react回在一个特定的时间点进行调用===生命周期函数====生命周期钩子，说的都是这几个生命周期函数，还有后续的几个函数。</p>
+<h4 id="组件挂载流程："><a href="#组件挂载流程：" class="headerlink" title="组件挂载流程："></a>组件挂载流程：</h4><p>  理解：</p>
+<ol>
+<li>组件对象从创建到死亡会经历特定的节点</li>
+<li>React组件对象包含一系列钩子函数（生命周期回调函数），在特定的时刻进行调用。</li>
+<li>我们在定义组件时，在特定的生命周期回调函数中执行特定的工作。</li>
+</ol>
+<p>  react旧版生命周期如下所示，左边部分是挂载，右边是更新，最下面是卸载组件。</p>
+<p>  <img src="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Blog\blog\source_posts\前端学习\02_原理图\react生命周期(旧).png" alt="react生命周期(旧)"></p>
+<p>  如下代码演示了完整的生命周期：下面几个小结的完整代码都在这里展示</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id&#x3D;&quot;test1&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react@17&#x2F;umd&#x2F;react.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;react-dom@17&#x2F;umd&#x2F;react-dom.development.js&quot; crossorigin&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script src&#x3D;&quot;https:&#x2F;&#x2F;unpkg.com&#x2F;babel-standalone@6&#x2F;babel.min.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line">    &lt;script type&#x3D;&quot;text&#x2F;babel&quot;&gt;</span><br><span class="line">        class Count extends React.Component&#123;</span><br><span class="line">            constructor(props) &#123;</span><br><span class="line">                super(props)</span><br><span class="line">                console.log(&#39;Count---constructor&#39;)</span><br><span class="line">                this.state &#x3D; &#123;sum: 0&#125;</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; 组件将要挂载</span><br><span class="line">            componentWillMount() &#123;</span><br><span class="line">                console.log(&#39;Count-componentWillMount&#39;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 组件挂载完毕</span><br><span class="line">            componentDidMount() &#123;</span><br><span class="line">                console.log(&#39;Count---componentDidMount&#39;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 卸载组件按钮的回调</span><br><span class="line">            death &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                ReactDOM.unmountComponentAtNode(document.getElementById(&quot;test1&quot;))</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            componentWillUnmount() &#123;</span><br><span class="line">                console.log(&#39;Count---componentWillUnmount&#39;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            add &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                const &#123;sum&#125;  &#x3D; this.state</span><br><span class="line">                &#x2F;&#x2F; 内部必须要写this</span><br><span class="line">                this.setState(&#123;sum:sum+1&#125;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            &#x2F;&#x2F; 组件是否应该跟新</span><br><span class="line">            shouldComponentUpdate() &#123;</span><br><span class="line">                console.log(&#39;Count---shouldComponentUpdate&#39;)</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            componentWillUpdate() &#123;</span><br><span class="line">                console.log(&#39;Count---componentWillUpdate&#39;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            componentDidUpdate() &#123;</span><br><span class="line">                console.log(&#39;Count---componentDidUpdate&#39;)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            update &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                this.forceUpdate()</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">            render() &#123;</span><br><span class="line">                console.log(&#39;Count render&#39;)</span><br><span class="line">                const &#123;sum&#125; &#x3D; this.state</span><br><span class="line">                return (</span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                    &lt;h2&gt;当前求和是&#123;sum&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">                    &lt;button onClick&#x3D;&#123;this.add&#125;&gt;点我+1&lt;&#x2F;button&gt;</span><br><span class="line">                    &lt;button onClick&#x3D;&#123;this.death&#125;&gt;卸载组件&lt;&#x2F;button&gt;</span><br><span class="line">                    &lt;button onClick&#x3D;&#123;this.update&#125;&gt;强制更新&lt;&#x2F;button&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;        </span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        class A extends React.Component &#123;</span><br><span class="line">            state &#x3D; &#123;carName:&#39;奔驰&#39;&#125;</span><br><span class="line">            changeCar &#x3D; () &#x3D;&gt; &#123;</span><br><span class="line">                this.setState(&#123;carName:&#39;奥迪&#39;&#125;)</span><br><span class="line">            &#125;</span><br><span class="line">            render() &#123;</span><br><span class="line">                return (</span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                        &lt;h2&gt;我是A组件&lt;&#x2F;h2&gt;</span><br><span class="line">                        &lt;button onClick&#x3D;&#123;this.changeCar&#125;&gt;点我换车&lt;&#x2F;button&gt;</span><br><span class="line">                        &lt;B carName&#x3D;&#123;this.state.carName&#125;&#x2F;&gt;</span><br><span class="line">                    &lt;&#x2F;div&gt;</span><br><span class="line">                    </span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        class B extends React.Component &#123;</span><br><span class="line">            &#x2F;&#x2F; 这里其实还能接收到参数的</span><br><span class="line">            componentWillReceiveProps(props) &#123;</span><br><span class="line">                console.log(&#39;B----componentWillReceiveProps&#39;)</span><br><span class="line">            &#125;</span><br><span class="line">            &#x2F;&#x2F; 这个方法只要写了，必须要返回一个boolean的结果</span><br><span class="line">            shouldComponentUpdate() &#123;</span><br><span class="line">                console.log(&#39;B-----shouldComponentUpdate&#39;)</span><br><span class="line">                return true</span><br><span class="line">            &#125;</span><br><span class="line">            componentWillUpdate() &#123;</span><br><span class="line">                console.log(&#39;B----componentWillUpdate&#39;)</span><br><span class="line">            &#125;</span><br><span class="line">            componentDidUpdate() &#123;</span><br><span class="line">                console.log(&#39;B----componentDidUpdate&#39;)</span><br><span class="line">            &#125;</span><br><span class="line">            render() &#123;</span><br><span class="line">                return (</span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                        &lt;h2&gt;我是B组件，收到的车是&#123;this.props.carName&#125;&lt;&#x2F;h2&gt;</span><br><span class="line">                    &lt;&#x2F;div&gt;</span><br><span class="line">                )</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ReactDOM.render(&lt;A&#x2F;&gt;, document.getElementById(&#39;test1&#39;))</span><br><span class="line">    &lt;&#x2F;script&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>  <img src="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20220504115713816.png" alt="image-20220504115713816"></p>
+<p>  右侧的更新路径有下面三条路径：</p>
+<p>  <img src="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20220504120334687.png" alt="image-20220504120334687"></p>
+<p>  <strong>shouldComponentUpdate</strong>相当于是也给阀门，它返回false则不进行render的渲染更新，返回true则进行渲染更新。默认情况下这个方法返回true。</p>
+<p>  <img src="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20220504121357511.png" alt="image-20220504121357511"></p>
+<h5 id="旧流程之——forceUpdate的流程："><a href="#旧流程之——forceUpdate的流程：" class="headerlink" title="旧流程之——forceUpdate的流程："></a>旧流程之——forceUpdate的流程：</h5><p>  强制更新的过程不再需要判断shouldComponentUpdate了。</p>
+<p>  不对状态进行修改的情况下，也能够对组件进行更新。</p>
+<h5 id="旧流程之——父组件render"><a href="#旧流程之——父组件render" class="headerlink" title="旧流程之——父组件render"></a>旧流程之——父组件render</h5><p>  接下来开始研究父子组件。</p>
+<p>  A组件里面包含了B组件，那么A组件就是B组件的父组件了。</p>
+<p>  坑之——componentWillReceiveProps，这个名字应该叫componentWillReceiveNewProps，因为第一次接收props时并不会调用这个方法。</p>
+<h5 id="旧版生命周期总结"><a href="#旧版生命周期总结" class="headerlink" title="旧版生命周期总结"></a>旧版生命周期总结</h5><p>  初始化阶段：</p>
+<p>  由ReactDOM.render()触发——初次渲染</p>
+<p>  constructor</p>
+<p>  componentWillMouont</p>
+<p>  rendert</p>
+<p>  componentDidMount—-常用，页面组件加载完成之后搞一些事情，比如进行一些初始化的事情，例如开启定时器，发送网络请求，订阅消息。</p>
+<p>  更新阶段，由组件内部的this.setState或者父组件render触发</p>
+<p>  shouldComponnetUpdate</p>
+<p>  componentWillUpdate</p>
+<p>  render–必须的</p>
+<p>  componentDidUpdate</p>
+<p>  卸载组件：由ReactDOM.unmountComponentAtNode()触发</p>
+<p>  componentWillUnmount—-常用，进行一些收尾事项，例如关闭定时器，取消订阅消息。</p>
+<h4 id="对比新旧生命周期"><a href="#对比新旧生命周期" class="headerlink" title="对比新旧生命周期"></a>对比新旧生命周期</h4><p>  新的生命周期如下图所示：</p>
+<p>  <img src="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/Blog\blog\source_posts\前端学习\02_原理图\react生命周期(新).png" alt="react生命周期(新)"></p>
+<h3 id="vscode使用熟悉："><a href="#vscode使用熟悉：" class="headerlink" title="vscode使用熟悉："></a>vscode使用熟悉：</h3><ol>
+<li><p>打开浏览器：下载open in browser插件</p>
+</li>
+<li><p>在render中写注释的方法：</p>
+<p>jsx中的注释：</p>
+<p>{/**/} js表达式，表达式里面是要注释的内容。</p>
+</li>
+<li><p>提示html标签， 安装插件——html snippest</p>
+</li>
+<li><p>代码片段折叠小技巧： #region  #endregion</p>
+</li>
+</ol>
+<p>  目前的困扰：</p>
+<p>  1、this为什么有的时候必须得写</p>
+<p>  2、ajax和js再看一下</p>
+<p>  3、目前vscode没有自动提示的功能，很多时候方法名写错了都没有提示的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/" data-id="cl2r49rrz00036k7k45cl7bjz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8props/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/07/26/%E7%BB%83%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">练习</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SPI/" rel="tag">SPI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/" rel="tag">日志框架</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/SPI/" style="font-size: 10px;">SPI</a> <a href="/tags/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6/" style="font-size: 10px;">日志框架</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/04/count/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/03/ref/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8props/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/26/%E7%BB%83%E4%B9%A0/">练习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 cym<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

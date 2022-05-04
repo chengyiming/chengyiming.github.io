@@ -7,15 +7,15 @@
   
   <title>cym 的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="tuBebuddy google keyword 关键词排名">
+  <meta name="description" content="哈哈哈哈                                     class Count extends React.Component{             constructor(props) {                 super(props)                 console.log(&#39;Count---constructor&#39;)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cym 的博客">
-<meta property="og:url" content="http://example.com/2021/02/21/tuBebuddy%20google%20keyword/index.html">
+<meta property="og:url" content="http://example.com/2022/05/04/count/index.html">
 <meta property="og:site_name" content="cym 的博客">
-<meta property="og:description" content="tuBebuddy google keyword 关键词排名">
+<meta property="og:description" content="哈哈哈哈                                     class Count extends React.Component{             constructor(props) {                 super(props)                 console.log(&#39;Count---constructor&#39;)">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-02-21T15:20:15.454Z">
-<meta property="article:modified_time" content="2021-02-21T15:20:15.454Z">
+<meta property="article:published_time" content="2022-05-04T03:43:08.068Z">
+<meta property="article:modified_time" content="2022-05-04T04:48:31.072Z">
 <meta property="article:author" content="cym">
 <meta name="twitter:card" content="summary">
   
@@ -66,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-tuBebuddy google keyword" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-count" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2021/02/21/tuBebuddy%20google%20keyword/" class="article-date">
-  <time datetime="2021-02-21T15:20:15.454Z" itemprop="datePublished">2021-02-21</time>
+    <a href="/2022/05/04/count/" class="article-date">
+  <time datetime="2022-05-04T03:43:08.068Z" itemprop="datePublished">2022-05-04</time>
 </a>
     
   </div>
@@ -78,13 +78,128 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>tuBebuddy google keyword</p>
-<p>关键词排名</p>
+        <head>
+    <title>哈哈哈哈</title>
+</head>
 
+<body>
+    <div id="test1"></div>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class Count extends React.Component{
+            constructor(props) {
+                super(props)
+                console.log('Count---constructor')
+                this.state = {sum: 0}
+            }
+            // 组件将要挂载
+            componentWillMount() {
+                console.log('Count-componentWillMount')
+            }
+
+            // 组件挂载完毕
+            componentDidMount() {
+                console.log('Count---componentDidMount')
+            }
+
+            // 卸载组件按钮的回调
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById("test1"))
+            }
+
+            componentWillUnmount() {
+                console.log('Count---componentWillUnmount')
+            }
+
+            add = () => {
+                const {sum}  = this.state
+                // 内部必须要写this
+                this.setState({sum:sum+1})
+            }
+
+            // 组件是否应该跟新
+            shouldComponentUpdate() {
+                console.log('Count---shouldComponentUpdate')
+                return true;
+            }
+
+            componentWillUpdate() {
+                console.log('Count---componentWillUpdate')
+            }
+
+            componentDidUpdate() {
+                console.log('Count---componentDidUpdate')
+            }
+
+            update = () => {
+                this.forceUpdate()
+            }
+        
+            render() {
+                console.log('Count render')
+                const {sum} = this.state
+                return (
+                    <div>
+                    <h2>当前求和是{sum}</h2>
+                    <button onClick={this.add}>点我+1</button>
+                    <button onClick={this.death}>卸载组件</button>
+                    <button onClick={this.update}>强制更新</button>
+                </div>        
+                )
+            }
+        }
+        
+        class A extends React.Component {
+            state = {carName:'奔驰'}
+            changeCar = () => {
+                this.setState({carName:'奥迪'})
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>我是A组件</h2>
+                        <button onClick={this.changeCar}>点我换车</button>
+                        <B carName={this.state.carName}/>
+                    </div>
+                    
+                )
+            }
+        }
+
+        class B extends React.Component {
+            // 这里其实还能接收到参数的
+            componentWillReceiveProps(props) {
+                console.log('B----componentWillReceiveProps')
+            }
+            // 这个方法只要写了，必须要返回一个boolean的结果
+            shouldComponentUpdate() {
+                console.log('B-----shouldComponentUpdate')
+                return true
+            }
+            componentWillUpdate() {
+                console.log('B----componentWillUpdate')
+            }
+            componentDidUpdate() {
+                console.log('B----componentDidUpdate')
+            }
+            render() {
+                return (
+                    <div>
+                        <h2>我是B组件，收到的车是{this.props.carName}</h2>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<A/>, document.getElementById('test1'))
+    </script>
+</body>
+ 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/21/tuBebuddy%20google%20keyword/" data-id="ckrjz5lwv000h1o7kg3jb2uol" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/05/04/count/" data-id="cl2r49rrr00006k7k5uui29te" class="article-share-link">Share</a>
       
       
     </footer>
@@ -93,17 +208,8 @@
     
 <nav id="article-nav">
   
-    <a href="/2021/02/28/matlab%E8%AF%BB%E5%8F%96excel%E6%96%87%E4%BB%B6%E7%9A%84%E6%AF%8F%E4%B8%80%E5%88%97%EF%BC%8C%E7%BB%98%E5%88%B6%E5%A4%9A%E6%9D%A1%E6%9B%B2%E7%BA%BF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/02/20/%E5%85%B3%E4%BA%8EPr%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/05/03/ref/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title"></div>
     </a>

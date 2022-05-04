@@ -66,6 +66,197 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Redis安装卸载以及设置自启动" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/" class="article-date">
+  <time datetime="2021-04-21T12:16:29.170Z" itemprop="datePublished">2021-04-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Redis安装卸载以及设置自启动"><a href="#Redis安装卸载以及设置自启动" class="headerlink" title="Redis安装卸载以及设置自启动"></a>Redis安装卸载以及设置自启动</h3><ol>
+<li>到官网下载redis的稳定版本</li>
+</ol>
+<p><img src="/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421182511857.png" alt="image-20210421182511857"></p>
+<ol start="2">
+<li>安装gcc编译环境</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc-c++</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>解压</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-6.2.2.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>进入到对应的文件中</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd redis-6.2.2</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>编译</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>运行</li>
+</ol>
+<p>进入src目录下，输入<code>./redis-server</code>，出现下面的内容，说明启动成功了</p>
+<p><img src="/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421184434847.png" alt="image-20210421184434847"></p>
+<p>在另一台虚拟机上连接测试：</p>
+<p><img src="/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421184735450.png" alt="image-20210421184735450"></p>
+<p>以上的这种方式的不便之处：</p>
+<ul>
+<li>需要进入src的目录下执行redis-server和redis-cli</li>
+<li>不能开启自启动</li>
+</ul>
+<p>配置redis可执行文件的位置：</p>
+<p><code>cp redis-cli redis-server redis-sentinel /usr/local/bin</code></p>
+<p>之后可以在任何位置执行```redis-server`启动redis服务器。</p>
+<p>配置redis.conf文件</p>
+<ul>
+<li>设置redis-server后台模式运行</li>
+</ul>
+<p>daemonize yes</p>
+<ul>
+<li>设置dir，也就是存放RDB文件的位置为/usr/local/redis/路径下</li>
+<li>配置密码：当redis暴露在公网的时候可以保证安全性</li>
+</ul>
+<p>配置redis.conf自启动</p>
+<p>cp redis_init_script /etc/init.d/</p>
+<p>进入路径中，修改这个文件，按照自己的文件地址修改其中的内容</p>
+<p>vim redis_init_script</p>
+<p><img src="/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210421191327650.png" alt="image-20210421191327650"></p>
+<p>配置redis开机自启动</p>
+<p>在redis_init_script的文件中添加下面两行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig: 22345 10 90  </span><br><span class="line"># description: Start and Stop redis </span><br></pre></td></tr></table></figure>
+
+<p>设置开机自启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chkconfig redis_init_script on</span><br></pre></td></tr></table></figure>
+
+<p>然后reboot计算机，之后使用</p>
+<figure class="highlight ps"><figcaption><span>-ef | grep redis```观察redis-server是不是已经启动了</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">还可以使用下面的命令去启动或者关闭服务：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>打开redis命令:service 文件名称 start<br>关闭redis命令:service 文件名称 stop<br>设为开机启动:chkconfig 文件名称 on<br>设为开机关闭:chkconfig 文件名称 off</p>
+<pre><code>
+
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/21/Redis%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BD%E4%BB%A5%E5%8F%8A%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8/" data-id="ckrjz5lwn00061o7kby2g8sk1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Redis安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/12/Redis%E5%AE%89%E8%A3%85/" class="article-date">
+  <time datetime="2021-04-12T07:13:50.600Z" itemprop="datePublished">2021-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Redis安装"><a href="#Redis安装" class="headerlink" title="Redis安装"></a>Redis安装</h3><p>下载</p>
+<p>tar -zxvf redis.tar.gz</p>
+<p>cd redis</p>
+<p>make &amp;&amp; make install</p>
+<p>在linux中进行差找</p>
+<p>/searchContent   然后n查找下一个， N查找上一个。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/12/Redis%E5%AE%89%E8%A3%85/" data-id="ckrjz5lwl00041o7k0th2dxsn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-网卡和虚拟ip， 浮动ip等多种ip之间的关系。" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/04/11/%E7%BD%91%E5%8D%A1%E5%92%8C%E8%99%9A%E6%8B%9Fip%EF%BC%8C%20%E6%B5%AE%E5%8A%A8ip%E7%AD%89%E5%A4%9A%E7%A7%8Dip%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82/" class="article-date">
+  <time datetime="2021-04-11T06:19:09.651Z" itemprop="datePublished">2021-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别"><a href="#弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别" class="headerlink" title="弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别"></a>弹性公网IP、私有IP、浮动IP、虚拟IP之间有何区别</h4><p>弹性公网IP是可以直接访问Internet的IP地址。一个弹性公网IP只能给一个ECS使用</p>
+<p>私有IP是公有云内网所使用的IP地址，用于内网通信，私有IP不能访问Internet。</p>
+<p>浮动IP与弹性公网IP功能类似，都是公网IP，用于连接公网，主要不同点在于浮动IP接口无法配置带宽参数。详情请参见“<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/api-eip/eip_openstackapi_0006.html">浮动IP</a>”。</p>
+<p>虚拟IP（即VIP）是一个未分配给真实弹性云服务器网卡的IP地址。主要用在弹性云服务器的主备切换，达到高可用性HA（High Availability）的目的。当主服务器发生故障无法对外提供服务时，动态将虚拟IP切换到备服务器，继续对外提供服务。详情请参见“<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/usermanual-vpc/vpc_vip_0001.html">虚拟IP简介</a>”。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/04/11/%E7%BD%91%E5%8D%A1%E5%92%8C%E8%99%9A%E6%8B%9Fip%EF%BC%8C%20%E6%B5%AE%E5%8A%A8ip%E7%AD%89%E5%A4%9A%E7%A7%8Dip%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E3%80%82/" data-id="ckrjz5lx0000q1o7kbk763aw8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-购物车的存储" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/03/13/%E8%B4%AD%E7%89%A9%E8%BD%A6%E7%9A%84%E5%AD%98%E5%82%A8/" class="article-date">
+  <time datetime="2021-03-13T02:34:11.181Z" itemprop="datePublished">2021-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="购物车的存储"><a href="#购物车的存储" class="headerlink" title="购物车的存储"></a>购物车的存储</h3><p>1.使用cookie</p>
+<p>优点：不需要登录，不需要查询数据库，数据直接保存在浏览器端</p>
+<p>性能好，访问速度比较快，没有和数据库的交互</p>
+<p>但是数据会有丢失</p>
+<p>隐私安全</p>
+<ol start="2">
+<li>session只能适用于登录的情况嘛，不登录就没有session?</li>
+<li>购物车数据需要频繁读写</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2021/03/13/%E8%B4%AD%E7%89%A9%E8%BD%A6%E7%9A%84%E5%AD%98%E5%82%A8/" data-id="ckrjz5lx1000r1o7k2tol4tmr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vue.js的学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/03/05/vue.js%E7%9A%84%E5%AD%A6%E4%B9%A0/" class="article-date">
@@ -288,146 +479,6 @@
 
 
   
-    <article id="post-如何解决Pr出现的系统兼容性问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/02/18/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Pr%E5%87%BA%E7%8E%B0%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98/" class="article-date">
-  <time datetime="2021-02-18T10:16:41.010Z" itemprop="datePublished">2021-02-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="如何解决Pr2020出现的系统兼容性问题"><a href="#如何解决Pr2020出现的系统兼容性问题" class="headerlink" title="如何解决Pr2020出现的系统兼容性问题"></a>如何解决Pr2020出现的系统兼容性问题</h3><p>打开<code>Pr2020</code>之后，出现下面的提示：</p>
-<p><img src="/2021/02/18/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Pr%E5%87%BA%E7%8E%B0%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210218180954360.png" alt="image-20210218180954360"></p>
-<ol>
-<li><p>点击“修复”，跳到下面的页面</p>
-<p><img src="/2021/02/18/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Pr%E5%87%BA%E7%8E%B0%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210218181148035.png" alt="image-20210218181148035"></p>
-</li>
-<li><p>点击“NVIDIA驱动程序下载”页面，跳到下面的页面</p>
-<p><img src="/2021/02/18/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Pr%E5%87%BA%E7%8E%B0%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210218181346796.png" alt="image-20210218181346796"></p>
-</li>
-<li><p>根据自己的电脑情况选择1~5中的内容，其中下载类型包括两种，分别是<code>Studio驱动程序(SD)</code>和<code>Game Ready驱动程序(GRD)</code>，前者适用于视频剪辑，后者适用于游戏。</p>
-</li>
-<li><p>下载安装完成之后，重启<code>Adobe</code>软件即可解决问题</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/18/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3Pr%E5%87%BA%E7%8E%B0%E7%9A%84%E7%B3%BB%E7%BB%9F%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98/" data-id="ckrjz5lwy000m1o7k4p9g3vkn" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-各种编辑工具" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/02/18/%E5%90%84%E7%A7%8D%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/" class="article-date">
-  <time datetime="2021-02-18T10:08:07.918Z" itemprop="datePublished">2021-02-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="各种编辑工具"><a href="#各种编辑工具" class="headerlink" title="各种编辑工具"></a>各种编辑工具</h1><ol>
-<li><a href>markdown</a></li>
-<li></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/18/%E5%90%84%E7%A7%8D%E7%BC%96%E8%BE%91%E5%B7%A5%E5%85%B7/" data-id="ckrjz5lwx000l1o7k9wrkbxax" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-git远程操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/02/15/git%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/" class="article-date">
-  <time datetime="2021-02-15T13:12:33.542Z" itemprop="datePublished">2021-02-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="git远程操作"><a href="#git远程操作" class="headerlink" title="git远程操作"></a>git远程操作</h3><p>git 支持本地协议，我们可以在本地初始化一个本地的远程服务器</p>
-<p>git init ~/git-server –bare将当前仓库初始化为一个裸仓库</p>
-<p>裸仓库没有工作目录，中央服务器不需要工作目录</p>
-<p><img src="/2021/02/15/git%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/Users\15288\AppData\Roaming\Typora\typora-user-images\image-20210215211537959.png" alt="image-20210215211537959"></p>
-<p>  git remote add aliasName repository：之后我们就可以通过这个aliasName别名来操作远程仓库，远程仓库一个叫做origin。</p>
-<p>git remote -v：查看远程仓库的信息</p>
-<p>cat .git/config：可以查看所有的配置名称</p>
-<p>提交之前先pull然后再提交，否则会出现![reject]这种提示</p>
-<p>将信息提交到远程其实是提交历史的复制</p>
-<p>git push origin master：将本地的内容推送到远程（origin）的master分支，origin/master这个指针发生了移动，同时，远程仓库的HEAD和master也移动了。</p>
-<p>git pull= git fetch + git merge</p>
-<p>每一个远程分支在本地都有一个指针，比如远程的master分支在本地的名字叫做origin/master，他不会随着提交移动，只是远程分支在本地的指针。如果checkout到这个引用下面，然后commit并没有什么用，origin/master并不会移动。</p>
-<p>git merge origin/master：这个是说将origin/master分支合并到master分支上面</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/15/git%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C/" data-id="ckrjz5lws000b1o7k8tig4pgn" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Pr剪辑相关知识" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/02/15/Pr%E5%89%AA%E8%BE%91%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="article-date">
-  <time datetime="2021-02-15T12:25:47.706Z" itemprop="datePublished">2021-02-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Pr剪辑相关知识"><a href="#Pr剪辑相关知识" class="headerlink" title="Pr剪辑相关知识"></a>Pr剪辑相关知识</h2><ol>
-<li>剪辑快捷键c和v切换</li>
-<li>原地替换素材</li>
-<li>删除所有素材的中间空白区域：序列-&gt;封闭间隙（前提是没有添加音轨）</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/02/15/Pr%E5%89%AA%E8%BE%91%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" data-id="ckrjz5lwj00011o7k5w0khyi5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -465,7 +516,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">February 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li></ul>
     </div>
   </div>
 
@@ -478,23 +529,23 @@
       <ul>
         
           <li>
+            <a href="/2022/05/04/count/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/03/ref/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/02/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6%E4%BD%BF%E7%94%A8props/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/react/">(no title)</a>
+          </li>
+        
+          <li>
             <a href="/2021/07/26/%E7%BB%83%E4%B9%A0/">练习</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/25/%E6%97%A5%E5%BF%97%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/">日志框架介绍</a>
-          </li>
-        
-          <li>
-            <a href="/2021/07/25/SPI%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/">SPI的相关介绍</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/22/Redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2021/04/21/Redis%E7%9A%84%E5%88%86%E5%8C%BA/">(no title)</a>
           </li>
         
       </ul>
